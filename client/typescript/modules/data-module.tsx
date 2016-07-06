@@ -7,17 +7,39 @@ import {
 from '../mocks/mock1';
 
 let stocks = [],
-    meta_definitions = [];
+    meta_definitions = [],
+    current_date = '',
+    future_dates = [];
 
 function processData(raw_data = mock_data) {
-    stocks = raw_data.dates[0].oids;
+    const dates = raw_data.dates;
+    stocks = dates[0].oids;
     meta_definitions = raw_data.meta_definitions;
+    current_date = dates[0].ymd;
+    future_dates = dates.map((date) => date.ymd);
+    future_dates.splice(0, 1); //remove current date from future dates
+
+    //add closing prices for the future dates;
+    for (let stock of stocks) {
+        const id = stock.id;
+        let closes = [];
+        for (let ymd of future_dates) {
+            const oid = dates.find((date) => date.ymd === ymd).oids.find((oid) => oid.id === id),
+                close = oid ? oid.c : "no data";
+
+            closes.push({
+                ymd,
+                close
+            });
+        }
+        stock.closes = closes;
+    }
 }
 
 function buildRows() {
     let rows = [];
     processData();
-    console.log(stocks);
+    
     for (let stock of stocks) {
         let row = [];
         for (let metaDef of meta_definitions) {
@@ -26,23 +48,19 @@ function buildRows() {
                 row.push(<td>{stock[sid]}</td>);
             }
         }
+        for (let ymd of future_dates) {
+            const close = stock.closes.find((el) => el.ymd === ymd).close;
+            row.push(<td>{close}</td>)
+        }
         rows.push(<tr>{row}</tr>);
     }
-return rows;
+    return rows;
 
 };
 
 //A helper the Table component will use in its render method;
 function buildTable() {
-   /* let rows = [<tr>
-  <td>Gold</td>
-  <td>Silver</td>
-  </tr>,
-        <tr>
-  <td>1300</td>
-  <td>230</td>
-  </tr>
-    ];*/
+
     const rows = buildRows();
     return <table>{rows}</table>
 };
