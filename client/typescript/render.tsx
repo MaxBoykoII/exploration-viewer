@@ -1,6 +1,6 @@
 import {
     Table
 }
-from './classes/table';
+from './components/table';
 
 ReactDOM.render(<Table/>, document.getElementById('table-container'));

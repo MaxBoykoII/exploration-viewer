@@ -1,17 +1,11 @@
 /// <reference path="../typings/index.d.ts" />
 
+import {buildTable} from '../modules/data-module';
+
 export class Table extends React.Component < any, any > {
     render() {
         return (<div>
-  <table>
-  <tr>
-  <td>Gold</td>
-  <td>Silver</td>
-  </tr>
-  <tr>
-  <td>1300</td>
-  <td>230</td>
-  </tr></table>
+    {buildTable()}
     </div>);
     };
 }

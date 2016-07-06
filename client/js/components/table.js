@@ -5,13 +5,14 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+var data_module_1 = require('../modules/data-module');
 var Table = (function (_super) {
     __extends(Table, _super);
     function Table() {
         _super.apply(this, arguments);
     }
     Table.prototype.render = function () {
-        return (React.createElement("div", null, React.createElement("table", null, React.createElement("tr", null, React.createElement("td", null, "Gold"), React.createElement("td", null, "Silver")), React.createElement("tr", null, React.createElement("td", null, "1300"), React.createElement("td", null, "230")))));
+        return (React.createElement("div", null, data_module_1.buildTable()));
     };
     ;
     return Table;
