@@ -10,7 +10,7 @@ app.use(express.static(__dirname + '/public'));
 app.use('/bower_components', express.static(__dirname + '/bower_components'));
 
 //routes for querys and valid dates 
-app.get('/_demo789/edp-api-v3a.php', function(req, res) {
+app.get('/edp-api-v3a.php', function(req, res) {
     var date = req.query.m,
         query = request(demo_base + 'm=' + date);
     console.log(date);

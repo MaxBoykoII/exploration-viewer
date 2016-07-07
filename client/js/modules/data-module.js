@@ -47,7 +47,7 @@ function fetch(query) {
     console.log(this);
     jQuery.ajax({
         method: 'GET',
-        url: "../_demo789/edp-api-v3a.php?m=" + query,
+        url: "../edp-api-v3a.php?m=" + query,
         success: function (data) {
             console.log('request is a sucess!');
             processData.call(_this, data);
