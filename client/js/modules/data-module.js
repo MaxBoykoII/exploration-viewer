@@ -1,17 +1,17 @@
-// A module for interacting with the API, processing the data, and sorting it.
+/// <reference path="../typings/index.d.ts" />
 "use strict";
+// A module for interacting with the API, processing the data, and sorting the data.
 // For the static site, import mock data.
-var mock1_1 = require('../mocks/mock1');
-var stocks = [], meta_definitions = [], current_date = '', future_dates = [];
+//import {mock_data} from '../mocks/mock1';
+/*let stocks = [],
+    raw_data = mock_data,
+    meta_definitions = [],
+    current_date = '',
+    future_dates = [];*/
 function processData(raw_data) {
-    if (raw_data === void 0) { raw_data = mock1_1.mock_data; }
-    var dates = raw_data.dates;
-    stocks = dates[0].oids;
-    meta_definitions = raw_data.meta_definitions;
-    current_date = dates[0].ymd;
-    future_dates = dates.map(function (date) { return date.ymd; });
-    future_dates.splice(0, 1); //remove current date from future dates
-    console.log(current_date, future_dates);
+    var dates = raw_data.dates, meta_definitions = raw_data.meta_definitions;
+    var stocks = dates[0].oids, future_dates = dates.map(function (date) { return date.ymd; });
+    future_dates.splice(0, 1); //remove current date from future_dates
     //add closing prices for the future dates;
     var _loop_1 = function(stock) {
         var id = stock.id;
@@ -33,11 +33,39 @@ function processData(raw_data) {
         var stock = stocks_1[_a];
         _loop_1(stock);
     }
+    this.setState({
+        stocks: stocks,
+        meta_definitions: meta_definitions,
+        future_dates: future_dates
+    });
 }
-function buildRows() {
+//main function for interacting with the API
+function fetch(query) {
+    var _this = this;
+    if (query === void 0) { query = ''; }
+    console.log("fetch has been invoked with query = " + query);
+    console.log(this);
+    jQuery.ajax({
+        method: 'GET',
+        url: "../_demo789/edp-api-v3a.php?m=" + query,
+        success: function (data) {
+            console.log('request is a sucess!');
+            processData.call(_this, data);
+            console.log('data updated!');
+        },
+        error: function () {
+            console.log('something went wrong!');
+            console.log("Here is the query: " + query);
+        },
+        complete: function () {
+            console.log('I am complete.');
+        }
+    });
+}
+exports.fetch = fetch;
+function buildRows(stocks, meta_definitions, future_dates) {
+    console.log('building rows!');
     var rows = [];
-    processData();
-    console.log(stocks);
     for (var _i = 0, stocks_2 = stocks; _i < stocks_2.length; _i++) {
         var stock = stocks_2[_i];
         var row = [];
@@ -62,18 +90,12 @@ function buildRows() {
 }
 ;
 //A helper the Table component will use in its render method;
-function buildTable() {
-    /* let rows = [<tr>
-  <td>Gold</td>
-  <td>Silver</td>
-  </tr>,
-        <tr>
-  <td>1300</td>
-  <td>230</td>
-  </tr>
-    ];*/
-    var rows = buildRows();
-    return React.createElement("table", null, rows);
+function buildTable(stocks, meta_definitions, future_dates) {
+    console.log("length is " + stocks.length);
+    if (stocks.length) {
+        var rows = buildRows(stocks, meta_definitions, future_dates);
+        return React.createElement("table", null, rows);
+    }
 }
 exports.buildTable = buildTable;
 ;

@@ -1,3 +1,4 @@
+/// <reference path="globals/jquery/index.d.ts" />
 /// <reference path="globals/react-addons-create-fragment/index.d.ts" />
 /// <reference path="globals/react-addons-css-transition-group/index.d.ts" />
 /// <reference path="globals/react-addons-linked-state-mixin/index.d.ts" />

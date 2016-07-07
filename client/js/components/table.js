@@ -9,10 +9,22 @@ var data_module_1 = require('../modules/data-module');
 var Table = (function (_super) {
     __extends(Table, _super);
     function Table() {
-        _super.apply(this, arguments);
+        _super.call(this);
+        this.state = {
+            'current_date': '2016-02-02',
+            'future_dates': [],
+            'stocks': [],
+            'meta_definitions': []
+        };
+        console.log("Constructor called!...");
     }
+    ;
+    Table.prototype.componentWillMount = function () {
+        data_module_1.fetch.call(this, this.state.current_date);
+        console.log('request made!');
+    };
     Table.prototype.render = function () {
-        return (React.createElement("div", null, data_module_1.buildTable()));
+        return (React.createElement("div", null, " ", React.createElement("p", null, "The current date for this table instance is ", this.state.current_date), data_module_1.buildTable(this.state.stocks, this.state.meta_definitions, this.state.future_dates)));
     };
     ;
     return Table;
