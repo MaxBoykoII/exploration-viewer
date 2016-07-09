@@ -10,7 +10,7 @@ function processData(raw_data) {
         var id = stock.id;
         var closes = [];
         var _loop_2 = function(ymd) {
-            var oid = dates.find(function (date) { return date.ymd === ymd; }).oids.find(function (oid) { return oid.id === id; }), close_1 = oid ? oid.c : "no data";
+            var oid = dates.find(function (date) { return date.ymd === ymd; }).oids.find(function (oid) { return oid.id === id; }), close_1 = oid ? oid.c : "NA";
             closes.push({
                 ymd: ymd,
                 close: close_1
@@ -70,14 +70,27 @@ function buildRows(stocks, meta_definitions, future_dates) {
         }
         rows.push(React.createElement("tr", null, row));
     }
-    return rows;
+    return (React.createElement("tbody", null, rows));
 }
-;
+function buildThead(meta_definitions, future_dates) {
+    var th_arr = [];
+    for (var _i = 0, meta_definitions_2 = meta_definitions; _i < meta_definitions_2.length; _i++) {
+        var metaDef = meta_definitions_2[_i];
+        if (metaDef.sid !== 'id') {
+            th_arr.push(React.createElement("th", null, metaDef.short));
+        }
+    }
+    for (var _a = 0, future_dates_3 = future_dates; _a < future_dates_3.length; _a++) {
+        var ymd = future_dates_3[_a];
+        th_arr.push(React.createElement("th", null, ymd));
+    }
+    return (React.createElement("thead", {className: 'thead-default'}, React.createElement("tr", null, th_arr)));
+}
 //A helper the Table component will use in its render method;
 function buildTable(stocks, meta_definitions, future_dates) {
     if (stocks.length) {
         var rows = buildRows(stocks, meta_definitions, future_dates);
-        return React.createElement("table", null, rows);
+        return (React.createElement("div", {className: "table-responsive"}, React.createElement("table", {className: "table table-striped table-hover table-bordered table-condensed"}, buildThead(meta_definitions, future_dates), rows)));
     }
 }
 exports.buildTable = buildTable;

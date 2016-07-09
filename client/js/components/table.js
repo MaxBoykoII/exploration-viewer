@@ -23,7 +23,7 @@ var Table = (function (_super) {
         data_module_1.fetch.call(this, this.state.current_date);
     };
     Table.prototype.render = function () {
-        return (React.createElement("div", null, " ", React.createElement("p", null, "The current date for this table instance is ", this.state.current_date), React.createElement(date_input_1.DateInput, {placeholder: this.state.current_date}), data_module_1.buildTable(this.state.stocks, this.state.meta_definitions, this.state.future_dates)));
+        return (React.createElement("div", null, " ", React.createElement("p", null, "The current date for this table instance is ", this.state.current_date), React.createElement(date_input_1.DateInput, {className: "form-control", placeholder: this.state.current_date}), data_module_1.buildTable(this.state.stocks, this.state.meta_definitions, this.state.future_dates)));
     };
     ;
     return Table;

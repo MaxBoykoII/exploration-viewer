@@ -28,7 +28,7 @@ export class Table extends React.Component < any, any > {
     }
     render() {
         return (<div> <p>The current date for this table instance is {this.state.current_date}</p>
-        <DateInput placeholder={this.state.current_date}/>
+        <DateInput className="form-control" placeholder={this.state.current_date}/>
     {buildTable(this.state.stocks, this.state.meta_definitions, this.state.future_dates)}
     </div>);
     };

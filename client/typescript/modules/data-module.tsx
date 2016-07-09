@@ -16,7 +16,7 @@ function processData(raw_data) {
         let closes = [];
         for (let ymd of future_dates) {
             const oid = dates.find((date) => date.ymd === ymd).oids.find((oid) => oid.id === id),
-                close = oid ? oid.c : "no data";
+                close = oid ? oid.c : "NA";
 
             closes.push({
                 ymd,
@@ -65,15 +65,38 @@ function buildRows(stocks, meta_definitions, future_dates) {
         }
         rows.push(<tr>{row}</tr>);
     }
-    return rows;
+    return (<tbody>{rows}</tbody>);
 
-};
+}
+
+function buildThead(meta_definitions, future_dates) {
+    let th_arr = []
+
+    for (let metaDef of meta_definitions) {
+        if (metaDef.sid !== 'id') {
+            th_arr.push(<th>{metaDef.short}</th>)
+        }
+    }
+    for (let ymd of future_dates) {
+        th_arr.push(<th>{ymd}</th>)
+    }
+    return (<thead className='thead-default'>
+    <tr>
+    {th_arr}
+    </tr>
+    </thead>)
+}
 
 //A helper the Table component will use in its render method;
 function buildTable(stocks, meta_definitions, future_dates) {
     if (stocks.length) {
         const rows = buildRows(stocks, meta_definitions, future_dates);
-        return <table>{rows}</table>
+        return (<div className="table-responsive">
+        <table className="table table-striped table-hover table-bordered table-condensed">
+        {buildThead(meta_definitions, future_dates)}
+        {rows}
+        </table>
+        </div>);
     }
 };
 
