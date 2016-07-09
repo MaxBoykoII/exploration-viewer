@@ -1,16 +1,6 @@
 /// <reference path="../typings/index.d.ts" />
 
-// A module for interacting with the API, processing the data, and sorting the data.
-
-// For the static site, import mock data.
-//import {mock_data} from '../mocks/mock1';
-
-/*let stocks = [],
-    raw_data = mock_data,
-    meta_definitions = [],
-    current_date = '',
-    future_dates = [];*/
-
+// A module for interacting with the main API, processing the data, and sorting the data.
 
 
 function processData(raw_data) {
@@ -44,28 +34,21 @@ function processData(raw_data) {
 //main function for interacting with the API
 
 function fetch(query = '') {
-    console.log(`fetch has been invoked with query = ${query}`);
-    console.log(this);
+
     jQuery.ajax({
         method: 'GET',
         url: `../edp-api-v3a.php?m=${query}`,
         success: (data) => {
-            console.log('request is a sucess!');
             processData.call(this, data);
-            console.log('data updated!')
+
         },
         error: () => {
             console.log('something went wrong!');
-            console.log(`Here is the query: ${query}`);
-        },
-        complete: () => {
-            console.log('I am complete.');
         }
     });
 }
 
 function buildRows(stocks, meta_definitions, future_dates) {
-    console.log('building rows!');
     let rows = [];
 
     for (let stock of stocks) {
@@ -88,7 +71,6 @@ function buildRows(stocks, meta_definitions, future_dates) {
 
 //A helper the Table component will use in its render method;
 function buildTable(stocks, meta_definitions, future_dates) {
-    console.log(`length is ${stocks.length}`);
     if (stocks.length) {
         const rows = buildRows(stocks, meta_definitions, future_dates);
         return <table>{rows}</table>

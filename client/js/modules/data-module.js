@@ -1,13 +1,6 @@
 /// <reference path="../typings/index.d.ts" />
 "use strict";
-// A module for interacting with the API, processing the data, and sorting the data.
-// For the static site, import mock data.
-//import {mock_data} from '../mocks/mock1';
-/*let stocks = [],
-    raw_data = mock_data,
-    meta_definitions = [],
-    current_date = '',
-    future_dates = [];*/
+// A module for interacting with the main API, processing the data, and sorting the data.
 function processData(raw_data) {
     var dates = raw_data.dates, meta_definitions = raw_data.meta_definitions;
     var stocks = dates[0].oids, future_dates = dates.map(function (date) { return date.ymd; });
@@ -43,28 +36,19 @@ function processData(raw_data) {
 function fetch(query) {
     var _this = this;
     if (query === void 0) { query = ''; }
-    console.log("fetch has been invoked with query = " + query);
-    console.log(this);
     jQuery.ajax({
         method: 'GET',
         url: "../edp-api-v3a.php?m=" + query,
         success: function (data) {
-            console.log('request is a sucess!');
             processData.call(_this, data);
-            console.log('data updated!');
         },
         error: function () {
             console.log('something went wrong!');
-            console.log("Here is the query: " + query);
-        },
-        complete: function () {
-            console.log('I am complete.');
         }
     });
 }
 exports.fetch = fetch;
 function buildRows(stocks, meta_definitions, future_dates) {
-    console.log('building rows!');
     var rows = [];
     for (var _i = 0, stocks_2 = stocks; _i < stocks_2.length; _i++) {
         var stock = stocks_2[_i];
@@ -91,7 +75,6 @@ function buildRows(stocks, meta_definitions, future_dates) {
 ;
 //A helper the Table component will use in its render method;
 function buildTable(stocks, meta_definitions, future_dates) {
-    console.log("length is " + stocks.length);
     if (stocks.length) {
         var rows = buildRows(stocks, meta_definitions, future_dates);
         return React.createElement("table", null, rows);

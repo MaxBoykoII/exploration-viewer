@@ -19,7 +19,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "build": "npm run compile: ts; npm run build:bundle",
+    "build": "npm run compile:ts && npm run build:bundle",
     "precompile:ts": "rm -rf ./client/js",
     "compile:ts": "tsc --outDir ./client/js --module commonjs --jsx react ./client/typescript/**/*.tsx  ./client/typescript/**/*.ts ./client/typescript/*.tsx",
     "build:bundle": "browserify ./client/js/**/*.js ./client/js/*.js | uglifyjs -mc > ./public/js/bundle.js"

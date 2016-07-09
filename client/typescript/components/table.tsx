@@ -6,6 +6,13 @@ import {
 }
 from '../modules/data-module';
 
+import {
+    DateInput
+}
+from './date-input';
+
+
+
 export class Table extends React.Component < any, any > {
     constructor() {
         super();
@@ -15,14 +22,13 @@ export class Table extends React.Component < any, any > {
             'stocks': [],
             'meta_definitions': []
         };
-        console.log("Constructor called!...");
     };
     componentWillMount() {
         fetch.call(this, this.state.current_date);
-        console.log('request made!');
     }
     render() {
         return (<div> <p>The current date for this table instance is {this.state.current_date}</p>
+        <DateInput placeholder={this.state.current_date}/>
     {buildTable(this.state.stocks, this.state.meta_definitions, this.state.future_dates)}
     </div>);
     };

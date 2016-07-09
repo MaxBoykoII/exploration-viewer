@@ -3,7 +3,8 @@ var express = require('express'),
     request = require('request');
 
 //GoldMinerPulse API urls
-var demo_base = "https://www.goldminerpulse.com/_demo789/edp-api-v3a.php?";
+var demo_base = "https://www.goldminerpulse.com/_demo789/edp-api-v3a.php?",
+    valid_dates = 'https://www.goldminerpulse.com/_demo789/valid-dates-api.php';
 
 //serve client and bower_components 
 app.use(express.static(__dirname + '/public'));
@@ -13,11 +14,17 @@ app.use('/bower_components', express.static(__dirname + '/bower_components'));
 app.get('/edp-api-v3a.php', function(req, res) {
     var date = req.query.m,
         query = request(demo_base + 'm=' + date);
-    console.log(date);
+
     query.pipe(res);
     query.on('end', function() {
         res.end();
-        console.log("response ended!");
+    });
+    app.get('/valid-dates-api.php', function(req, res) {
+        var query = request(valid_dates);
+        query.pipe(res);
+        query.on('end', function(){
+            res.end();
+        });
     });
 
 });
