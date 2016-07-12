@@ -11,7 +11,8 @@ var DateInput = (function (_super) {
         _super.apply(this, arguments);
     }
     DateInput.prototype.render = function () {
-        return (React.createElement("input", {type: 'text', placeholder: this.props.placeholder}));
+        var range = (this.props.min && this.props.max) ? React.createElement("p", null, " Range: ", this.props.min + " to " + this.props.max, " ") : null;
+        return (React.createElement("form", null, React.createElement("input", {type: 'text', id: "date-input", placeholder: this.props.placeholder}), " ", React.createElement("button", {className: "btn btn-primary", onClick: this.props.submitCallback}, "Submit"), range));
     };
     return DateInput;
 }(React.Component));
