@@ -1,5 +1,9 @@
 /// <reference path="../typings/index.d.ts" />
 //functions for interacting with the valid-dates api and handling date validation
+import {
+    fetch
+}
+from './data-module';
 
 function getValidDates() {
     jQuery.ajax({
@@ -35,6 +39,8 @@ function _submit(e) {
         this.setState({
             "current_date": closest
         });
+        fetch.call(this, closest);
+        jQuery('#date-input').val(closest);
     }
     else {
         alert("Please enter a valid date in the yyyy-mm-dd format.");

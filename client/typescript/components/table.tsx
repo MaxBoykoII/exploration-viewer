@@ -33,9 +33,7 @@ export class Table extends React.Component < any, any > {
         fetch.call(this, this.state.current_date);
         getValidDates.call(this);
     }
-    componentWillUpdate() {
-        fetch.call(this, this.state.current_date);
-    }
+    
     render() {
         const lastIndex = this.state.valid_dates.length - 1;
 
