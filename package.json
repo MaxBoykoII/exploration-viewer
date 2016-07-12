@@ -1,6 +1,6 @@
 {
   "name": "exploration-viewer",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "A data-driven viewer for the new GoldMinerPulse API",
   "main": "server.js",
   "dependencies": {
